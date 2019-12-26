@@ -5,6 +5,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
 import java.util.Optional;
@@ -82,17 +83,20 @@ public final class JavaDoctor implements JavaDoctorObject, AutoCloseable
 	 */
 	public void fetch()
 	{
-		Optional.ofNullable(this.url.get()).map(url ->
-												{
-													try
-													{
-														return Jsoup.connect(url).maxBodySize(0).timeout(5_000).get();
-													}
-													catch (Exception ex)
-													{
-														return null;
-													}
-												}).ifPresent(this.doc::set);
+		final String url = this.url.get();
+		if (url == null)
+		{
+			return;
+		}
+
+		try
+		{
+			this.doc.set(Jsoup.connect(url).maxBodySize(0).timeout(5_000).get());
+		}
+		catch (IOException ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 
 	/**
