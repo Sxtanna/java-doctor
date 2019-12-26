@@ -167,14 +167,30 @@ public final class JavaDoctor implements JavaDoctorObject, AutoCloseable
 
 	/**
 	 *
-	 * Create a JavaDoctor
+	 * Create a JavaDoctor for later use
 	 *
 	 * @param url The URL to use
-	 * @return a JavaDoctor that points to this url
+	 *
+	 * @return a JavaDoctor that points to this url.
 	 */
 	public static JavaDoctor make(final URL url)
 	{
 		return new JavaDoctor(url.toString());
+	}
+
+	/**
+	 * Create a JavaDoctor and use it immediately
+	 *
+	 * @param url The URL to use
+	 *
+	 * @return a JavaDoctor that points to this url.
+	 */
+	public static JavaDoctor exam(final URL url)
+	{
+		final JavaDoctor doctor = make(url);
+		doctor.fetch();
+
+		return doctor;
 	}
 
 	private static final class JavaDoctorObjectImpl implements JavaDoctorObject
