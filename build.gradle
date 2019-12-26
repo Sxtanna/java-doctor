@@ -1,0 +1,32 @@
+plugins {
+    id 'java-library'
+}
+
+
+group 'com.sxtanna.jdoctor'
+version '1.0-SNAPSHOT'
+
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+
+test {
+    useJUnitPlatform()
+}
+
+sourceSets {
+    test.compileClasspath += configurations.compileOnly
+    test.runtimeClasspath += configurations.compileOnly
+}
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jsoup:jsoup:+"
+    
+    testCompile "org.junit.jupiter:junit-jupiter-engine:+"
+    testRuntime "org.junit.jupiter:junit-jupiter-engine:+"
+}
